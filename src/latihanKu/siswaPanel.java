@@ -326,12 +326,9 @@ public class siswaPanel extends javax.swing.JPanel {
 
     private void closeLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeLabel2MouseClicked
         // TODO add your handling code here:
-          java.awt.Container parent = this.getParent();
-    if (parent != null) {
-        parent.remove(this);
-        parent.revalidate();
-        parent.repaint();
-    }
+         removeAll();
+         revalidate();
+         repaint();
     }//GEN-LAST:event_closeLabel2MouseClicked
 
 
