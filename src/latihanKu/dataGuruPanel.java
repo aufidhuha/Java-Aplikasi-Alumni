@@ -338,6 +338,12 @@ public class dataGuruPanel extends javax.swing.JPanel {
 
     private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
         // TODO add your handling code here:
+        
+        if (txtNIP.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Harap mengisi data secara keseluruhan", "Peringatan", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         String NIP = txtNIP.getText();
         String namaGuru = txtNama.getText();
         String jenisKelamin = cbJenisKelamin.getSelectedItem().toString();
@@ -368,6 +374,10 @@ public class dataGuruPanel extends javax.swing.JPanel {
 
     private void buttonUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUbahActionPerformed
         // TODO add your handling code here:
+         if (txtNIP.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Harap memilih data untuk diubah", "Peringatan", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         String NIP = txtNIP.getText();
         String namaGuru = txtNama.getText();
         String jenisKelamin = cbJenisKelamin.getSelectedItem().toString();
@@ -398,11 +408,16 @@ public class dataGuruPanel extends javax.swing.JPanel {
 
     private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
         // TODO add your handling code here:
-         String NIP = txtNIP.getText();
-       
-     
+        if (txtNIP.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Harap memilih data untuk dihapus", "Peringatan", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        int yesOrNo = JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin menghapus data ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         
-        String sql = "DELETE FROM guru WHERE nip = ?";
+        if (yesOrNo == JOptionPane.YES_OPTION) {
+         String NIP = txtNIP.getText();    
+     
+         String sql = "DELETE FROM guru WHERE nip = ?";
         
         try {
             Connection cnVar = koneksi.getKoneksi();
@@ -412,11 +427,11 @@ public class dataGuruPanel extends javax.swing.JPanel {
            
             psVar.execute();
             
-            JOptionPane.showMessageDialog(null, "Data berhasil diubah");
+            JOptionPane.showMessageDialog(null, "Data berhasil dihapus");
         } catch (SQLException sQLException) {
-            JOptionPane.showMessageDialog(null, "Data gagal diubah");
+            JOptionPane.showMessageDialog(null, "Data gagal dihapus");
         }
-        
+      } 
         load_tabel_guru();
         reset();
     }//GEN-LAST:event_buttonHapusActionPerformed

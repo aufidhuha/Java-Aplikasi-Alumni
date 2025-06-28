@@ -271,6 +271,11 @@ public class jurusanPanel extends javax.swing.JPanel {
     private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
         // TODO add your handling code here:
         
+        if (txtKodeJurusan.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Harap mengisi data secara keseluruhan", "Peringatan", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         String kodeJurusan = txtKodeJurusan.getText();
         String namaJurusan = txtNamaJurusan.getText();
         
@@ -297,6 +302,10 @@ public class jurusanPanel extends javax.swing.JPanel {
     
     private void buttonUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUbahActionPerformed
         // TODO add your handling code here:
+         if (txtKodeJurusan.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Harap memilih data yang ingin diubah", "Peringatan", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
          String kodeJurusan = txtKodeJurusan.getText();
         String namaJurusan = txtNamaJurusan.getText();
         
@@ -323,6 +332,13 @@ public class jurusanPanel extends javax.swing.JPanel {
     
     private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
         // TODO add your handling code here:
+        if (txtKodeJurusan.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Harap memilih data yang ingin dihapus", "Peringatan", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        int yesOrNo = JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin menghapus data ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if (yesOrNo == JOptionPane.YES_OPTION) {
          String kodeJurusan = txtKodeJurusan.getText();
         
         String sql = "DELETE FROM jurusan WHERE kode_jur = ?";
@@ -338,8 +354,8 @@ public class jurusanPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Data berhasil dihapus");
         } catch (SQLException sQLException) {
             JOptionPane.showMessageDialog(null, "Data gagal dihapus");
-        }
-        
+         }
+       }
         load_tabel_jurusan();
         reset();
     }//GEN-LAST:event_buttonHapusActionPerformed

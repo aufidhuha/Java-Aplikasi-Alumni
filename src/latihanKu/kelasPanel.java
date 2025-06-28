@@ -414,6 +414,10 @@ public class kelasPanel extends javax.swing.JPanel {
 
     private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
         // TODO add your handling code here:
+        if (txtKodeKelas.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Harap mengisi data secara keseluruhan", "Peringatan", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         
         String kodeKelas = txtKodeKelas.getText();
         String namaKelas = txtNamaKelas.getText();
@@ -439,15 +443,22 @@ public class kelasPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Data berhasil disimpan");
         } catch (SQLException sQLException) {
             JOptionPane.showMessageDialog(null, "Data gagal disimpan" + sQLException.getMessage());
-        }
-        
+        } 
+//        
         load_table_kelas();
         reset();
     }//GEN-LAST:event_buttonTambahActionPerformed
 
     private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
         // TODO add your handling code here:
-        String kodeKelas = txtKodeKelas.getText();
+         if (txtKodeKelas.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Harap memilih data yang ingin dihapus", "Peringatan", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        int yesOrNo = JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin menghapus data ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if (yesOrNo == JOptionPane.YES_OPTION) {
+            String kodeKelas = txtKodeKelas.getText();
            
         
         try {
@@ -464,12 +475,18 @@ public class kelasPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Data gagal dihapus " + sQLException.getMessage());
         }
         
+        }
+        
         load_table_kelas();
         reset();
     }//GEN-LAST:event_buttonHapusActionPerformed
 
     private void buttonUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUbahActionPerformed
         // TODO add your handling code here:
+         if (txtKodeKelas.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Harap memilih data yang ingin diubah", "Peringatan", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         String kodeKelas = txtKodeKelas.getText();
         String namaKelas = txtNamaKelas.getText();
         String tingkatan = cbTingkatan.getSelectedItem().toString();
