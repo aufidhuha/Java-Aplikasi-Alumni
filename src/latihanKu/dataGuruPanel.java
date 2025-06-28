@@ -4,6 +4,14 @@
  */
 package latihanKu;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ASUS
@@ -15,6 +23,52 @@ public class dataGuruPanel extends javax.swing.JPanel {
      */
     public dataGuruPanel() {
         initComponents();
+        reset();
+        load_tabel_guru();
+    }
+    
+    void reset(){
+        txtNIP.setText(null);
+        txtNIP.setEditable(true);
+        txtNama.setText(null);
+        cbJenisKelamin.setSelectedItem(null);
+        txAAlamat.setText(null);
+    }
+    
+    
+    void load_tabel_guru(){
+        
+        DefaultTableModel model = new DefaultTableModel();
+        
+        model.addColumn("NIP");
+        model.addColumn("Nama Guru");
+        model.addColumn("Jenis Kelamin");
+        model.addColumn("Alamat");
+        
+        String sql = "SELECT * FROM guru";
+        
+        try {
+            Connection cnVar = koneksi.getKoneksi();
+            
+            Statement stVar = cnVar.createStatement();
+            
+            ResultSet rsVar = stVar.executeQuery(sql);
+            
+            while (rsVar.next()) {
+                String NIP = rsVar.getString("nip");
+                String namaGuru = rsVar.getString("nama_guru");
+                String jenisKelamin = rsVar.getString("gender");
+                String alamat = rsVar.getString("alamat");
+                Object[] baris = {NIP, namaGuru, jenisKelamin, alamat};
+                model.addRow(baris);
+            }           
+            
+            
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Warning, gagal mengambil data!");
+        }
+        
+        tableGuru.setModel(model);
     }
 
     /**
@@ -31,19 +85,19 @@ public class dataGuruPanel extends javax.swing.JPanel {
         closeLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtNIP = new javax.swing.JTextField();
+        txtNama = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbJenisKelamin = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txAAlamat = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        tableGuru = new javax.swing.JTable();
+        buttonTambah = new javax.swing.JButton();
+        buttonUbah = new javax.swing.JButton();
+        buttonHapus = new javax.swing.JButton();
+        buttonReset = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(204, 204, 204));
 
@@ -89,33 +143,33 @@ public class dataGuruPanel extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("NAMA");
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        txtNIP.setBackground(new java.awt.Color(255, 255, 255));
+        txtNIP.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
 
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        txtNama.setBackground(new java.awt.Color(255, 255, 255));
+        txtNama.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("ALAMAT");
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-laki", "Perempuan" }));
-        jComboBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        cbJenisKelamin.setBackground(new java.awt.Color(255, 255, 255));
+        cbJenisKelamin.setForeground(new java.awt.Color(0, 0, 0));
+        cbJenisKelamin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-laki", "Perempuan" }));
+        cbJenisKelamin.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("JENIS KELAMIN");
 
-        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
-        jScrollPane1.setViewportView(jTextArea1);
+        txAAlamat.setBackground(new java.awt.Color(255, 255, 255));
+        txAAlamat.setColumns(20);
+        txAAlamat.setRows(5);
+        txAAlamat.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
+        jScrollPane1.setViewportView(txAAlamat);
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableGuru.setBackground(new java.awt.Color(255, 255, 255));
+        tableGuru.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -126,36 +180,61 @@ public class dataGuruPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        tableGuru.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableGuruMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tableGuru);
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 0));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-add-16.png"))); // NOI18N
-        jButton1.setText("TAMBAH");
+        buttonTambah.setBackground(new java.awt.Color(0, 153, 0));
+        buttonTambah.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonTambah.setForeground(new java.awt.Color(255, 255, 255));
+        buttonTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-add-16.png"))); // NOI18N
+        buttonTambah.setText("TAMBAH");
+        buttonTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonTambahActionPerformed(evt);
+            }
+        });
 
-        jButton2.setBackground(new java.awt.Color(255, 153, 0));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-edit-16.png"))); // NOI18N
-        jButton2.setText("UBAH");
-        jButton2.setMaximumSize(new java.awt.Dimension(80, 23));
-        jButton2.setMinimumSize(new java.awt.Dimension(80, 23));
-        jButton2.setPreferredSize(new java.awt.Dimension(80, 23));
+        buttonUbah.setBackground(new java.awt.Color(255, 153, 0));
+        buttonUbah.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonUbah.setForeground(new java.awt.Color(255, 255, 255));
+        buttonUbah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-edit-16.png"))); // NOI18N
+        buttonUbah.setText("UBAH");
+        buttonUbah.setMaximumSize(new java.awt.Dimension(80, 23));
+        buttonUbah.setMinimumSize(new java.awt.Dimension(80, 23));
+        buttonUbah.setPreferredSize(new java.awt.Dimension(80, 23));
+        buttonUbah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonUbahActionPerformed(evt);
+            }
+        });
 
-        jButton3.setBackground(new java.awt.Color(255, 0, 0));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-delete-16.png"))); // NOI18N
-        jButton3.setText("HAPUS");
-        jButton3.setPreferredSize(new java.awt.Dimension(80, 23));
+        buttonHapus.setBackground(new java.awt.Color(255, 0, 0));
+        buttonHapus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonHapus.setForeground(new java.awt.Color(255, 255, 255));
+        buttonHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-delete-16.png"))); // NOI18N
+        buttonHapus.setText("HAPUS");
+        buttonHapus.setPreferredSize(new java.awt.Dimension(80, 23));
+        buttonHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonHapusActionPerformed(evt);
+            }
+        });
 
-        jButton4.setBackground(new java.awt.Color(51, 153, 255));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-reset-16.png"))); // NOI18N
-        jButton4.setText("RESET");
-        jButton4.setPreferredSize(new java.awt.Dimension(80, 23));
+        buttonReset.setBackground(new java.awt.Color(51, 153, 255));
+        buttonReset.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonReset.setForeground(new java.awt.Color(255, 255, 255));
+        buttonReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-reset-16.png"))); // NOI18N
+        buttonReset.setText("RESET");
+        buttonReset.setPreferredSize(new java.awt.Dimension(80, 23));
+        buttonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonResetActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -166,13 +245,13 @@ public class dataGuruPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -181,9 +260,9 @@ public class dataGuruPanel extends javax.swing.JPanel {
                             .addComponent(jLabel4)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbJenisKelamin, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNama)
+                            .addComponent(txtNIP, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(32, 32, 32))
@@ -197,15 +276,15 @@ public class dataGuruPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNIP, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4)
                         .addGap(12, 12, 12)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbJenisKelamin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
@@ -213,10 +292,10 @@ public class dataGuruPanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(80, 80, 80))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -228,14 +307,133 @@ public class dataGuruPanel extends javax.swing.JPanel {
        repaint();
     }//GEN-LAST:event_closeLabel2MouseClicked
 
+    private void tableGuruMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableGuruMouseClicked
+        // TODO add your handling code here:
+        int barisYangDipilih = tableGuru.rowAtPoint(evt.getPoint());
+        
+        String NIP = tableGuru.getValueAt(barisYangDipilih, 0).toString();
+        String namaGuru = tableGuru.getValueAt(barisYangDipilih, 1).toString();
+        String gender = tableGuru.getValueAt(barisYangDipilih, 2).toString();
+        String alamat = tableGuru.getValueAt(barisYangDipilih, 3).toString();
+        
+        txtNIP.setText(NIP);
+        txtNIP.setEditable(false);
+        txtNama.setText(namaGuru);
+       txAAlamat.setText(alamat);
+       
+        cbJenisKelamin.setSelectedItem(gender);
+       
+//        switch (gender) {
+//            case "Laki-laki":
+//               
+//                break;
+//            case "Perempuan":
+//                cbJenisKelamin.setSelectedItem("Perempuan");
+//                break;
+//            default:
+//                cbJenisKelamin.setSelectedItem(null);
+//                throw new AssertionError();
+//        }
+    }//GEN-LAST:event_tableGuruMouseClicked
+
+    private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
+        // TODO add your handling code here:
+        String NIP = txtNIP.getText();
+        String namaGuru = txtNama.getText();
+        String jenisKelamin = cbJenisKelamin.getSelectedItem().toString();
+        String alamat = txAAlamat.getText();
+     
+        
+        String sql = "INSERT INTO guru (nip, nama_guru, gender, alamat) VALUES (?, ?, ?, ?)";
+        
+        try {
+            Connection cnVar = koneksi.getKoneksi();
+            PreparedStatement psVar = cnVar.prepareStatement(sql);
+            
+            psVar.setString(1, NIP);
+            psVar.setString(2, namaGuru);
+            psVar.setString(3, jenisKelamin);
+            psVar.setString(4, alamat);
+            
+            psVar.execute();
+            
+            JOptionPane.showMessageDialog(null, "Data berhasil disimpan");
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Data gagal disimpan");
+        }
+        
+        load_tabel_guru();
+        reset();
+    }//GEN-LAST:event_buttonTambahActionPerformed
+
+    private void buttonUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUbahActionPerformed
+        // TODO add your handling code here:
+        String NIP = txtNIP.getText();
+        String namaGuru = txtNama.getText();
+        String jenisKelamin = cbJenisKelamin.getSelectedItem().toString();
+        String alamat = txAAlamat.getText();
+     
+        
+        String sql = "UPDATE guru SET nama_guru = ?, gender = ?, alamat = ? WHERE nip = ?";
+        
+        try {
+            Connection cnVar = koneksi.getKoneksi();
+            PreparedStatement psVar = cnVar.prepareStatement(sql);
+            
+            psVar.setString(1, namaGuru);
+            psVar.setString(2, jenisKelamin);
+            psVar.setString(3, alamat);
+            psVar.setString(4, NIP);
+            
+            psVar.execute();
+            
+            JOptionPane.showMessageDialog(null, "Data berhasil diubah");
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Data gagal diubah");
+        }
+        
+        load_tabel_guru();
+        reset();
+    }//GEN-LAST:event_buttonUbahActionPerformed
+
+    private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
+        // TODO add your handling code here:
+         String NIP = txtNIP.getText();
+       
+     
+        
+        String sql = "DELETE FROM guru WHERE nip = ?";
+        
+        try {
+            Connection cnVar = koneksi.getKoneksi();
+            PreparedStatement psVar = cnVar.prepareStatement(sql);
+            
+            psVar.setString(1, NIP);
+           
+            psVar.execute();
+            
+            JOptionPane.showMessageDialog(null, "Data berhasil diubah");
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Data gagal diubah");
+        }
+        
+        load_tabel_guru();
+        reset();
+    }//GEN-LAST:event_buttonHapusActionPerformed
+
+    private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
+        // TODO add your handling code here:
+        reset();
+    }//GEN-LAST:event_buttonResetActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonHapus;
+    private javax.swing.JButton buttonReset;
+    private javax.swing.JButton buttonTambah;
+    private javax.swing.JButton buttonUbah;
+    private javax.swing.JComboBox<String> cbJenisKelamin;
     private javax.swing.JLabel closeLabel2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -244,9 +442,9 @@ public class dataGuruPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tableGuru;
+    private javax.swing.JTextArea txAAlamat;
+    private javax.swing.JTextField txtNIP;
+    private javax.swing.JTextField txtNama;
     // End of variables declaration//GEN-END:variables
 }
