@@ -159,7 +159,7 @@ public class loginFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         String username = txtUsername.getText();
-        String password = txtUsername.getText();
+        String password = txtPassword.getText();
         
         if (username.length() != 0 && password.length() != 0) {
             
