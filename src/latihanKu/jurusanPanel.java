@@ -40,10 +40,8 @@ public class jurusanPanel extends javax.swing.JPanel {
         String sql = "SELECT * FROM jurusan";
         
         try {
-            Connection cnVar = koneksi.getKoneksi();
-            
-            Statement stVar = cnVar.createStatement();
-            
+            Connection cnVar = koneksi.getKoneksi();            
+            Statement stVar = cnVar.createStatement();            
             ResultSet rsVar = stVar.executeQuery(sql);
             
             while (rsVar.next()) {

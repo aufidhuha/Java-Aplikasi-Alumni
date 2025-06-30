@@ -85,8 +85,7 @@ public class kelasPanel extends javax.swing.JPanel {
         } catch (SQLException sQLException) {
         }
         cbJurusan.setSelectedItem(null);
-    }
-    
+    }    
     
     void comboWali(){
         try {
