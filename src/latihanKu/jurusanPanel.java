@@ -54,6 +54,7 @@ public class jurusanPanel extends javax.swing.JPanel {
             
         } catch (SQLException sQLException) {
             JOptionPane.showMessageDialog(null, "Warning, gagal mengambil data!");
+            System.out.println(sQLException);
         }
         
         tableJurusan.setModel(model);
@@ -67,6 +68,7 @@ public class jurusanPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         closeLabel2 = new javax.swing.JLabel();
@@ -80,6 +82,8 @@ public class jurusanPanel extends javax.swing.JPanel {
         buttonReset = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableJurusan = new javax.swing.JTable();
+
+        jTextField1.setText("jTextField1");
 
         setBackground(new java.awt.Color(204, 204, 204));
 
@@ -128,6 +132,11 @@ public class jurusanPanel extends javax.swing.JPanel {
 
         txtKodeJurusan.setBackground(new java.awt.Color(255, 255, 255));
         txtKodeJurusan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        txtKodeJurusan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtKodeJurusanActionPerformed(evt);
+            }
+        });
 
         txtNamaJurusan.setBackground(new java.awt.Color(255, 255, 255));
         txtNamaJurusan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
@@ -254,7 +263,7 @@ public class jurusanPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_closeLabel2MouseClicked
 
     private void tableJurusanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableJurusanMouseClicked
-        // TODO add your handling code here:
+       // TODO add your handling code here:
         int barisYangDipilih = tableJurusan.rowAtPoint(evt.getPoint());
         
         String kodeJurusan = tableJurusan.getValueAt(barisYangDipilih, 0).toString();
@@ -359,9 +368,13 @@ public class jurusanPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonHapusActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
-        // TODO add your handling code here:
+
         reset();
     }//GEN-LAST:event_buttonResetActionPerformed
+
+    private void txtKodeJurusanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKodeJurusanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtKodeJurusanActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -375,6 +388,7 @@ public class jurusanPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tableJurusan;
     private javax.swing.JTextField txtKodeJurusan;
     private javax.swing.JTextField txtNamaJurusan;

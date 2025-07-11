@@ -5,10 +5,11 @@
 package latihanKu;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
+import latihanKu.dashboardPanel;
 /**
  *
  * @author ASUS
@@ -21,6 +22,13 @@ public class mainFrame extends javax.swing.JFrame {
     public mainFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        
+//        dashboardPanel.setBackground(new Color(0, 134, 179));
+       
+        mainFramePanel.removeAll();
+        mainFramePanel.add(new dashboardPanel());
+        mainFramePanel.revalidate();
+        mainFramePanel.repaint();
     }
 
     /**

@@ -51,30 +51,24 @@
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jScrollPane4" min="-2" pref="715" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="56" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="jLabel2" min="-2" pref="160" max="-2" attributes="0"/>
+                      <Component id="lblFoto" min="-2" pref="160" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jTextField2" max="32767" attributes="0"/>
-                                      <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jComboBox1" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jTextField4" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtNama" max="32767" attributes="0"/>
+                                  <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cbJenisKelamin" alignment="0" pref="200" max="32767" attributes="0"/>
+                                  <Component id="txtTempatLahir" alignment="0" pref="200" max="32767" attributes="0"/>
                                   <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextField5" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="txtKalender" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jComboBox2" max="32767" attributes="0"/>
+                                      <Component id="cbKelas" max="32767" attributes="0"/>
                                       <EmptySpace pref="252" max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
@@ -84,27 +78,34 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTextField1" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="txtNIS" min="-2" pref="200" max="-2" attributes="0"/>
                                   <Component id="jLabel3" min="-2" pref="29" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextField6" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="txtHP" min="-2" pref="200" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jButton1" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="buttonTambah" min="-2" pref="110" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="buttonUbah" min="-2" pref="110" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jButton3" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="buttonHapus" min="-2" pref="110" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jButton4" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="buttonReset" min="-2" pref="110" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane4" min="-2" pref="715" max="-2" attributes="0"/>
+                          <Component id="lblFotoPath" min="-2" pref="326" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="56" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -123,8 +124,8 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jTextField1" pref="24" max="32767" attributes="0"/>
-                          <Component id="jTextField6" max="32767" attributes="0"/>
+                          <Component id="txtNIS" pref="24" max="32767" attributes="0"/>
+                          <Component id="txtHP" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -133,8 +134,8 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jTextField2" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                          <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNama" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="cbKelas" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -145,30 +146,32 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane1" min="-2" pref="124" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbJenisKelamin" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTextField4" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="txtTempatLahir" min="-2" pref="20" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTextField5" min="-2" pref="21" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="txtKalender" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <Component id="jLabel2" min="-2" pref="180" max="-2" attributes="0"/>
+                  <Component id="lblFoto" min="-2" pref="180" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="27" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="jButton3" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="jButton4" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-              <Component id="jScrollPane4" min="-2" pref="170" max="-2" attributes="0"/>
               <EmptySpace pref="20" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="buttonTambah" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="buttonUbah" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="buttonHapus" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="buttonReset" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+              <Component id="jScrollPane4" min="-2" pref="142" max="-2" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
+              <Component id="lblFotoPath" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -233,7 +236,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="lblFoto">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="0" type="rgb"/>
@@ -246,6 +249,9 @@
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblFotoMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -324,7 +330,7 @@
         <Property name="text" type="java.lang.String" value="ALAMAT"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="txtNIS">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -336,7 +342,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField2">
+    <Component class="javax.swing.JTextField" name="txtNama">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -348,7 +354,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField4">
+    <Component class="javax.swing.JTextField" name="txtTempatLahir">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -359,21 +365,6 @@
           </Border>
         </Property>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="jTextField5">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
-            <EmptyBorder bottom="1" left="10" right="1" top="1"/>
-          </Border>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField5ActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>
@@ -386,7 +377,7 @@
         <Property name="text" type="java.lang.String" value="KELAS"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox1">
+    <Component class="javax.swing.JComboBox" name="cbJenisKelamin">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -405,7 +396,7 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField6">
+    <Component class="javax.swing.JTextField" name="txtHP">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -417,7 +408,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox2">
+    <Component class="javax.swing.JComboBox" name="cbKelas">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -426,11 +417,7 @@
           <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
-            <StringItem index="0" value="10"/>
-            <StringItem index="1" value="11"/>
-            <StringItem index="2" value="12"/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -444,7 +431,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="jTextArea1">
+        <Component class="javax.swing.JTextArea" name="txaAlamat">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -455,7 +442,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="buttonTambah">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="99" red="0" type="rgb"/>
@@ -471,8 +458,11 @@
         </Property>
         <Property name="text" type="java.lang.String" value="TAMBAH"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonTambahActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="buttonUbah">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="99" red="ff" type="rgb"/>
@@ -488,8 +478,11 @@
         </Property>
         <Property name="text" type="java.lang.String" value="UBAH"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonUbahActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="buttonHapus">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="ff" type="rgb"/>
@@ -505,8 +498,11 @@
         </Property>
         <Property name="text" type="java.lang.String" value="HAPUS"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonHapusActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="buttonReset">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="33" type="rgb"/>
@@ -522,6 +518,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="RESET"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonResetActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane4">
       <AuxValues>
@@ -530,7 +529,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable3">
+        <Component class="javax.swing.JTable" name="tabelSiswa">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -544,8 +543,30 @@
               </Table>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelSiswaMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="com.toedter.calendar.JDateChooser" name="txtKalender">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="0" type="rgb"/>
+        </Property>
+        <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFotoPath">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="0" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="jLabel2"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package latihanKu;
-
+import java.sql.*;
 /**
  *
  * @author ASUS
@@ -15,6 +15,47 @@ public class dashboardPanel extends javax.swing.JPanel {
      */
     public dashboardPanel() {
         initComponents();
+        isiJumlahDataDasbord();
+        
+    }
+    
+    private void isiJumlahDataDasbord(){
+        Connection cnVar = koneksi.getKoneksi();
+        
+        try {
+            String sqlJurusan = "SELECT COUNT(*) AS jumlah FROM jurusan";
+            Statement stJurusan = cnVar.createStatement();
+            ResultSet rsJurusan = stJurusan.executeQuery(sqlJurusan);
+            if (rsJurusan.next()) {
+                int jumlah = rsJurusan.getInt("jumlah");
+                lblJurusan.setText(String.valueOf(jumlah));
+            }
+            
+            String sqlGuru = "SELECT COUNT(*) AS jumlah FROM guru";
+            Statement stGuru = cnVar.createStatement();
+            ResultSet rsGuru = stGuru.executeQuery(sqlGuru);
+            if (rsGuru.next()) {
+                int jumlah = rsGuru.getInt("jumlah");
+                lblGuru.setText(String.valueOf(jumlah));
+            }
+            
+            String sqlSiswa = "SELECT COUNT(*) AS jumlah FROM siswa";
+            Statement stSiswa = cnVar.createStatement();
+            ResultSet rsSiswa = stSiswa.executeQuery(sqlSiswa);
+            if (rsSiswa.next()) {
+                int jumlah = rsSiswa.getInt("jumlah");
+                lblSiswa.setText(String.valueOf(jumlah));
+            }
+            
+            String sqlKelas = "SELECT COUNT(*) AS jumlah FROM kelas";
+            Statement stKelas = cnVar.createStatement();
+            ResultSet rsKelas = stKelas.executeQuery(sqlKelas);
+            if (rsKelas.next()) {
+                int jumlah = rsKelas.getInt("jumlah");
+                lblKelas.setText(String.valueOf(jumlah));
+            }
+        } catch (SQLException sQLException) {
+        }
     }
 
     /**
@@ -29,19 +70,19 @@ public class dashboardPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
+        lblJurusan = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
+        lblSiswa = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        lblGuru = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        lblKelas = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 204, 204));
 
@@ -65,20 +106,20 @@ public class dashboardPanel extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("3");
+        lblJurusan.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        lblJurusan.setForeground(new java.awt.Color(0, 0, 0));
+        lblJurusan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblJurusan.setText("3");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+            .addComponent(lblJurusan, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addComponent(lblJurusan, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
         );
 
         jPanel3.setBackground(new java.awt.Color(0, 153, 255));
@@ -101,20 +142,20 @@ public class dashboardPanel extends javax.swing.JPanel {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("325");
+        lblSiswa.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        lblSiswa.setForeground(new java.awt.Color(0, 0, 0));
+        lblSiswa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSiswa.setText("325");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblSiswa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addComponent(lblSiswa, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
         );
 
         jPanel5.setBackground(new java.awt.Color(0, 153, 255));
@@ -137,20 +178,20 @@ public class dashboardPanel extends javax.swing.JPanel {
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("28");
+        lblGuru.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        lblGuru.setForeground(new java.awt.Color(0, 0, 0));
+        lblGuru.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblGuru.setText("28");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblGuru, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addComponent(lblGuru, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
         );
 
         jPanel7.setBackground(new java.awt.Color(0, 153, 255));
@@ -173,20 +214,20 @@ public class dashboardPanel extends javax.swing.JPanel {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("9");
+        lblKelas.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        lblKelas.setForeground(new java.awt.Color(0, 0, 0));
+        lblKelas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblKelas.setText("9");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblKelas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addComponent(lblKelas, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -240,13 +281,9 @@ public class dashboardPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -255,5 +292,9 @@ public class dashboardPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JLabel lblGuru;
+    private javax.swing.JLabel lblJurusan;
+    private javax.swing.JLabel lblKelas;
+    private javax.swing.JLabel lblSiswa;
     // End of variables declaration//GEN-END:variables
 }

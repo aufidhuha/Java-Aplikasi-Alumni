@@ -157,6 +157,11 @@ public class dataGuruPanel extends javax.swing.JPanel {
         cbJenisKelamin.setForeground(new java.awt.Color(0, 0, 0));
         cbJenisKelamin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-laki", "Perempuan" }));
         cbJenisKelamin.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        cbJenisKelamin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbJenisKelaminActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
@@ -440,6 +445,10 @@ public class dataGuruPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         reset();
     }//GEN-LAST:event_buttonResetActionPerformed
+
+    private void cbJenisKelaminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbJenisKelaminActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbJenisKelaminActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

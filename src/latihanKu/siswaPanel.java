@@ -3,7 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package latihanKu;
-
+import java.awt.HeadlessException;
+import java.awt.Image;
+import java.io.File;
+import java.nio.file.Files;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import java.util.Date;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author ASUS
@@ -15,6 +25,80 @@ public class siswaPanel extends javax.swing.JPanel {
      */
     public siswaPanel() {
         initComponents();
+        reset();
+        load_tabel_siswa();
+        comboKelas();
+    }
+    
+    void reset(){
+        txtNIS.setText(null);
+        txtNama.setText(null);
+        cbJenisKelamin.setSelectedItem(null);
+        txtTempatLahir.setText(null);
+        txtKalender.setCalendar(null);
+        txtHP.setText(null);
+        cbKelas.setSelectedItem(null);
+        txaAlamat.setText(null);
+        lblFoto.setIcon(null);
+        lblFoto.setText("Foto");
+        lblFotoPath.setText(null);
+    }
+    
+    void comboKelas(){
+        try {
+            String sql = "SELECT * FROM siswa";
+            Connection cnVar = koneksi.getKoneksi();
+            Statement stVar = cnVar.createStatement();
+            ResultSet rsVar = stVar.executeQuery(sql);
+            
+            while (rsVar.next()) {
+                
+                cbKelas.addItem(rsVar.getString("id_kelas"));
+                
+            }
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+        cbJenisKelamin.setSelectedItem(null);
+    }
+    
+    void load_tabel_siswa(){
+        
+        DefaultTableModel model = new DefaultTableModel();
+        
+        model.addColumn("NIS");
+        model.addColumn("Nama Siswa");
+        model.addColumn("L/P");
+        model.addColumn("Tempat Lahir");
+        model.addColumn("Tgl Lahir");
+        model.addColumn("Kelas");
+        model.addColumn("Hp");
+        
+        String sql = "SELECT * FROM siswa";
+        
+        try {
+            Connection cnVar = koneksi.getKoneksi();
+            Statement stVar = cnVar.createStatement();
+            ResultSet rsVar = stVar.executeQuery(sql);
+            
+            while (rsVar.next()) {                
+                String nis = rsVar.getString("nis");
+                String namaSiswa = rsVar.getString("nama_siswa");
+                String jenisKelamin = rsVar.getString("gender");
+                String tempatLahir = rsVar.getString("tempat_lahir");
+                String tglLahir = rsVar.getString("tgl_lahir");
+                String kelas = rsVar.getString("id_kelas");
+                String hp = rsVar.getString("no_hp");
+               
+                Object[] data = {nis, namaSiswa, jenisKelamin, tempatLahir, tglLahir, kelas, hp};
+                
+                model.addRow(data);
+            }
+            
+        } catch (SQLException sQLException) {
+             JOptionPane.showMessageDialog(null, "Gagal mengambil data " + sQLException.getMessage());
+        }
+        tabelSiswa.setModel(model);
     }
 
     /**
@@ -32,7 +116,7 @@ public class siswaPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         closeLabel2 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblFoto = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -40,22 +124,23 @@ public class siswaPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        txtNIS = new javax.swing.JTextField();
+        txtNama = new javax.swing.JTextField();
+        txtTempatLahir = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField6 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbJenisKelamin = new javax.swing.JComboBox<>();
+        txtHP = new javax.swing.JTextField();
+        cbKelas = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        txaAlamat = new javax.swing.JTextArea();
+        buttonTambah = new javax.swing.JButton();
+        buttonUbah = new javax.swing.JButton();
+        buttonHapus = new javax.swing.JButton();
+        buttonReset = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tabelSiswa = new javax.swing.JTable();
+        txtKalender = new com.toedter.calendar.JDateChooser();
+        lblFotoPath = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,10 +192,15 @@ public class siswaPanel extends javax.swing.JPanel {
                 .addGap(14, 14, 14))
         );
 
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("FOTO");
-        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblFoto.setForeground(new java.awt.Color(0, 0, 0));
+        lblFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFoto.setText("FOTO");
+        lblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblFoto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblFotoMouseClicked(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -140,69 +230,80 @@ public class siswaPanel extends javax.swing.JPanel {
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("ALAMAT");
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        txtNIS.setBackground(new java.awt.Color(255, 255, 255));
+        txtNIS.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
 
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        txtNama.setBackground(new java.awt.Color(255, 255, 255));
+        txtNama.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
 
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-
-        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
+        txtTempatLahir.setBackground(new java.awt.Color(255, 255, 255));
+        txtTempatLahir.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("KELAS");
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-laki", "Perempuan" }));
+        cbJenisKelamin.setBackground(new java.awt.Color(255, 255, 255));
+        cbJenisKelamin.setForeground(new java.awt.Color(0, 0, 0));
+        cbJenisKelamin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-laki", "Perempuan" }));
 
-        jTextField6.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        txtHP.setBackground(new java.awt.Color(255, 255, 255));
+        txtHP.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
 
-        jComboBox2.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox2.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10", "11", "12" }));
+        cbKelas.setBackground(new java.awt.Color(255, 255, 255));
+        cbKelas.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txaAlamat.setBackground(new java.awt.Color(255, 255, 255));
+        txaAlamat.setColumns(20);
+        txaAlamat.setRows(5);
+        jScrollPane1.setViewportView(txaAlamat);
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 0));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-add-16.png"))); // NOI18N
-        jButton1.setText("TAMBAH");
+        buttonTambah.setBackground(new java.awt.Color(0, 153, 0));
+        buttonTambah.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonTambah.setForeground(new java.awt.Color(255, 255, 255));
+        buttonTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-add-16.png"))); // NOI18N
+        buttonTambah.setText("TAMBAH");
+        buttonTambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonTambahActionPerformed(evt);
+            }
+        });
 
-        jButton2.setBackground(new java.awt.Color(255, 153, 0));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-edit-16.png"))); // NOI18N
-        jButton2.setText("UBAH");
+        buttonUbah.setBackground(new java.awt.Color(255, 153, 0));
+        buttonUbah.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonUbah.setForeground(new java.awt.Color(255, 255, 255));
+        buttonUbah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-edit-16.png"))); // NOI18N
+        buttonUbah.setText("UBAH");
+        buttonUbah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonUbahActionPerformed(evt);
+            }
+        });
 
-        jButton3.setBackground(new java.awt.Color(255, 0, 0));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-delete-16.png"))); // NOI18N
-        jButton3.setText("HAPUS");
+        buttonHapus.setBackground(new java.awt.Color(255, 0, 0));
+        buttonHapus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonHapus.setForeground(new java.awt.Color(255, 255, 255));
+        buttonHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-delete-16.png"))); // NOI18N
+        buttonHapus.setText("HAPUS");
+        buttonHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonHapusActionPerformed(evt);
+            }
+        });
 
-        jButton4.setBackground(new java.awt.Color(51, 153, 255));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-reset-16.png"))); // NOI18N
-        jButton4.setText("RESET");
+        buttonReset.setBackground(new java.awt.Color(51, 153, 255));
+        buttonReset.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonReset.setForeground(new java.awt.Color(255, 255, 255));
+        buttonReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/latihanKu/image/icons8-reset-16.png"))); // NOI18N
+        buttonReset.setText("RESET");
+        buttonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonResetActionPerformed(evt);
+            }
+        });
 
-        jTable3.setBackground(new java.awt.Color(255, 255, 255));
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tabelSiswa.setBackground(new java.awt.Color(255, 255, 255));
+        tabelSiswa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -213,7 +314,19 @@ public class siswaPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane4.setViewportView(jTable3);
+        tabelSiswa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelSiswaMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tabelSiswa);
+
+        txtKalender.setBackground(new java.awt.Color(255, 255, 255));
+        txtKalender.setForeground(new java.awt.Color(0, 0, 0));
+        txtKalender.setDateFormatString("yyyy-MM-dd");
+
+        lblFotoPath.setForeground(new java.awt.Color(0, 0, 0));
+        lblFotoPath.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -224,49 +337,50 @@ public class siswaPanel extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 56, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel4)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jTextField2)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(txtNama)
+                                    .addComponent(jLabel6)
+                                    .addComponent(cbJenisKelamin, 0, 200, Short.MAX_VALUE)
+                                    .addComponent(txtTempatLahir, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                     .addComponent(jLabel7)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtKalender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(47, 47, 47)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cbKelas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addContainerGap(252, Short.MAX_VALUE))
                                     .addComponent(jLabel9)
                                     .addComponent(jLabel10)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNIS, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(47, 47, 47)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel8)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtHP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap())
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buttonUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buttonHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))))
+                                .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFotoPath, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 56, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,16 +394,16 @@ public class siswaPanel extends javax.swing.JPanel {
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                            .addComponent(jTextField6))
+                            .addComponent(txtNIS, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                            .addComponent(txtHP))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbKelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
@@ -298,31 +412,29 @@ public class siswaPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbJenisKelamin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(15, 15, 15)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTempatLahir, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtKalender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(buttonTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(lblFotoPath)
+                .addGap(14, 14, 14))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void closeLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeLabel2MouseClicked
         // TODO add your handling code here:
@@ -331,18 +443,480 @@ public class siswaPanel extends javax.swing.JPanel {
          repaint();
     }//GEN-LAST:event_closeLabel2MouseClicked
 
+    private void tabelSiswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelSiswaMouseClicked
+        // TODO add your handling code here:
+        // Mengambil indeks baris yang diklik pada tabel siswa
+        try {
+        String nis = null;
+            int baris = tabelSiswa.rowAtPoint(evt.getPoint());
+
+// Mengambil nilai dari kolom pertama (NIS) pada baris yang diklik dan mengubah ke String
+            nis = tabelSiswa.getValueAt(baris, 0).toString();
+
+// Mengambil nilai dari kolom kedua (Nama Siswa)
+            String namaSiswa = tabelSiswa.getValueAt(baris, 1).toString();
+
+// Mengambil objek dari kolom ketiga (Jenis Kelamin)
+            Object jkObj = tabelSiswa.getValueAt(baris, 2);
+
+// Mengambil objek dari kolom keempat (Tempat Lahir)
+            Object tempatObj = tabelSiswa.getValueAt(baris, 3);
+
+// Mengambil objek dari kolom kelima (Tanggal Lahir)
+            Object tglObj = tabelSiswa.getValueAt(baris, 4);
+
+// Mengambil objek dari kolom keenam (Kelas)
+            Object kelasObj = tabelSiswa.getValueAt(baris, 5);
+
+// Mengambil objek dari kolom ketujuh (Nomor HP)
+            Object hpObj = tabelSiswa.getValueAt(baris, 6);
+
+// Menampilkan nilai NIS pada field input dan membuatnya tidak bisa diubah
+            txtNIS.setText(nis);
+            txtNIS.setEditable(false);
+
+// Menampilkan nama siswa ke field input
+            txtNama.setText(namaSiswa);
+
+// Mengonversi objek menjadi string, jika null maka hasilnya null atau string kosong
+            String jenisKelamin = (jkObj != null) ? jkObj.toString() : null;
+            String tempatLahir = (tempatObj != null) ? tempatObj.toString() : "";
+            String tglLahir = (tglObj != null) ? tglObj.toString() : null;
+            String idKelas = (kelasObj != null) ? kelasObj.toString() : null;
+            String noHP = (hpObj != null) ? hpObj.toString() : "";
+
+// Menampilkan tempat lahir, no HP, dan memilih kelas sesuai data
+            txtTempatLahir.setText(tempatLahir);
+            txtHP.setText(noHP);
+            cbKelas.setSelectedItem(idKelas);
+
+// Jika tanggal lahir tidak null dan tidak kosong, ubah ke format Date dan tampilkan di komponen kalender
+            if (tglLahir != null && !tglLahir.isEmpty()) {
+                try {
+                    txtKalender.setDate(java.sql.Date.valueOf(tglLahir));
+                } catch (IllegalArgumentException e) {
+                    // Jika gagal parsing tanggal, kosongkan field tanggal
+                    txtKalender.setDate(null);
+                }
+            } else {
+                txtKalender.setDate(null);
+            }
+
+// Konversi kode jenis kelamin ke bentuk tampilan yang dipahami pengguna
+            switch (jenisKelamin) {
+                case "L":
+                    cbJenisKelamin.setSelectedItem("Laki-laki");
+                    break;
+                case "P":
+                    cbJenisKelamin.setSelectedItem("Perempuan");
+                    break;
+                default:
+                    cbJenisKelamin.setSelectedItem(null);
+                    break;
+            }
+        
+            // Query untuk mengambil data alamat dan foto berdasarkan NIS
+            String sql = "SELECT alamat, foto FROM siswa WHERE nis = ?";
+
+            // Membuka koneksi ke database
+            Connection conn = koneksi.getKoneksi();
+
+            // Menyiapkan statement SQL dengan parameter
+            PreparedStatement ps = conn.prepareStatement(sql);
+ 
+            // Mengisi parameter dengan NIS
+            ps.setString(1, nis);
+
+            // Menjalankan query dan menyimpan hasilnya
+            ResultSet rs = ps.executeQuery();
+
+            // Jika data ditemukan
+            if (rs.next()) {
+                // Mengambil alamat dan foto dari hasil query
+                String alamat = rs.getString("alamat");
+                String foto = rs.getString("foto");
+
+                // Menampilkan alamat ke field input
+                txaAlamat.setText(alamat);
+
+                // Jika path foto tidak kosong, tampilkan gambar ke label foto
+                if (foto != null && !foto.isEmpty()) {
+                    ImageIcon icon = new ImageIcon(foto);
+                    Image image = icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH);
+                    lblFotoPath.setText(foto);
+                    lblFoto.setText(null);
+                    lblFoto.setIcon(new ImageIcon(image));
+                } else {
+                    // Jika tidak ada foto, set teks "Foto" dan hapus icon
+                    lblFoto.setText("Foto");
+                    lblFoto.setIcon(null);
+                }
+            }
+        } catch (SQLException e) {
+            // Menampilkan error ke konsol jika terjadi kesalahan SQL
+            System.err.println(e.getMessage());
+        } catch (Exception e ) {
+            
+        }
+
+    }//GEN-LAST:event_tabelSiswaMouseClicked
+
+    private void lblFotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFotoMouseClicked
+        // TODO add your handling code here:
+        try {
+            JFileChooser chooser = new JFileChooser();
+            int result = chooser.showOpenDialog(null);
+            
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File file = chooser.getSelectedFile();
+                
+                if (file != null) {
+                    
+                    ImageIcon icon = new ImageIcon(file.toString());
+                    
+                    Image image = icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH);
+                    
+                    ImageIcon ic = new ImageIcon(image);
+                    
+                    lblFoto.setText(null);
+                    
+                    lblFoto.setIcon(ic);
+                    
+                    String filename = file.getAbsolutePath();
+                    lblFotoPath.setText(filename);
+                }
+            } else {
+                System.err.println("Pemilihan file dibatalkan oleh pengguna");
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Error Upload " + e.getMessage());
+        }
+    }//GEN-LAST:event_lblFotoMouseClicked
+
+    private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
+        // TODO add your handling code here:
+        // Mengambil teks dari field NIS
+        String nis = txtNIS.getText();
+
+        // Mengambil teks dari field Nama Siswa
+        String namaSiswa = txtNama.getText();
+
+        // Mengambil item yang dipilih dari combo box jenis kelamin dan mengubahnya menjadi string
+        String jenisKelamin = cbJenisKelamin.getSelectedItem().toString();
+
+        // Variabel untuk menyimpan hasil konversi jenis kelamin (L/P)
+        String jK = null;
+
+        // Mengambil teks dari field Tempat Lahir
+        String tempatLahir = txtTempatLahir.getText();
+
+        // Mengambil tanggal dari komponen kalender
+        Date tglLahirDate = (Date) txtKalender.getDate();
+
+        // Mengubah tanggal lahir menjadi format "yyyy-MM-dd"
+        String tglLahir = new SimpleDateFormat("yyyy-MM-dd").format(tglLahirDate);
+
+        // Mengambil teks dari field nomor HP
+        String hp = txtHP.getText();
+
+        // Mengambil item yang dipilih dari combo box kelas
+        String kelas = cbKelas.getSelectedItem().toString();
+
+        // Mengambil teks dari field alamat
+        String alamat = txaAlamat.getText();
+
+        // Mengambil path file dari label path foto
+        String filePath = lblFotoPath.getText();
+
+        // Konversi jenis kelamin dari teks menjadi kode (L atau P)
+        switch (jenisKelamin) {
+            case "Laki-laki":
+                jK = "L";
+                break;
+            case "Perempuan":
+                jK = "P";
+                break;
+            default:
+                jK = null;
+                break;
+        }
+
+        // Variabel untuk menyimpan path file foto tujuan
+        String foto = null;
+
+        // Mengecek apakah ada path file foto yang dipilih
+        if (filePath.length() != 0) {
+            try {
+                // Menyimpan path sumber file
+                String sourcePath = filePath;
+                File sourceFile = new File(sourcePath);
+
+                // Menentukan folder tujuan untuk menyimpan foto
+                String destinationFolderPath = "src/foto/";
+                File destinationFolder = new File(destinationFolderPath);
+
+                // Jika folder tujuan belum ada, buat folder tersebut
+                if (!destinationFolder.exists()) {
+                    destinationFolder.mkdir();
+                }
+
+                // Mengambil ekstensi file (contoh: jpg, png, dll)
+                String extension = sourcePath.substring(sourcePath.lastIndexOf('.') + 1);
+
+                // Membuat nama file baru yang unik berdasarkan timestamp
+                String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                
+                String destinationFileName = "foto-" + timestamp + "." + extension;
+
+                // Membuat file tujuan dengan path dan nama file baru
+                File destinationFile = new File(destinationFolderPath + destinationFileName);
+
+                // Menyalin file dari sumber ke tujuan
+                Files.copy(sourceFile.toPath(), destinationFile.toPath());
+
+                // Menyimpan path foto yang telah dipindahkan
+                foto = destinationFile.getPath();
+
+            } catch (Exception e) {
+                // Menampilkan pesan error jika gagal mengupload file
+                JOptionPane.showMessageDialog(null, "Gagal upload file: " + e.getMessage());
+            }
+        } else {
+            // Jika tidak ada file yang dipilih, set null
+            foto = null;
+        }
+
+        try {
+            // Query SQL untuk menyimpan data siswa ke database
+            String sql = "INSERT INTO siswa(nis,nama_siswa,gender,tempat_lahir,tgl_lahir,alamat,no_hp,id_kelas,foto)"
+                    + " VALUES(?,?,?,?,?,?,?,?,?)";
+
+            // Membuka koneksi ke database
+            Connection conn = koneksi.getKoneksi();
+
+            // Menyiapkan statement SQL dengan parameter
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            // Mengisi nilai parameter satu per satu
+            statement.setString(1, nis);
+            statement.setString(2, namaSiswa);
+            statement.setString(3, jK);
+            statement.setString(4, tempatLahir);
+            statement.setString(5, tglLahir);
+            statement.setString(6, alamat);
+            statement.setString(7, hp);
+            statement.setString(8, kelas);
+            statement.setString(9, foto);
+
+            // Menjalankan query penyimpanan
+            statement.execute();
+
+            // Menampilkan pesan bahwa data berhasil disimpan
+            JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
+        } catch (SQLException e) {
+            // Menampilkan pesan jika terjadi kesalahan saat menyimpan data
+            JOptionPane.showMessageDialog(null, "Data gagal disimpan!");
+        }
+
+        // Memuat ulang data siswa ke tabel
+        load_tabel_siswa();
+
+        // Mengosongkan semua input form setelah data disimpan
+        reset();
+
+    }//GEN-LAST:event_buttonTambahActionPerformed
+
+    private void buttonUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUbahActionPerformed
+        // TODO add your handling code here:
+        // Mengambil NIS dari field input
+String nis = txtNIS.getText();
+
+// Mengambil Nama Siswa dari field input
+        String namaSiswa = txtNama.getText();
+
+// Mengambil nilai dari combo box jenis kelamin dan mengubah menjadi String
+        String jenisKelamin = cbJenisKelamin.getSelectedItem().toString();
+
+// Variabel untuk menyimpan kode jenis kelamin ('L' atau 'P')
+        String jK = null;
+
+// Mengambil Tempat Lahir dari field input
+        String tempatLahir = txtTempatLahir.getText();
+
+// Mengambil tanggal lahir dari komponen kalender
+        Date tglLahirDate = txtKalender.getDate();
+
+// Mengubah tanggal lahir menjadi format "yyyy-MM-dd"
+        String tglLahir = new SimpleDateFormat("yyyy-MM-dd").format(tglLahirDate);
+
+// Mengambil Nomor HP dari field input
+        String hp = txtHP.getText();
+
+// Mengambil Kelas dari combo box
+        String kelas = cbKelas.getSelectedItem().toString();
+
+// Mengambil Alamat dari field input
+        String alamat = txaAlamat.getText();
+
+// Mengambil path file foto dari field input tersembunyi
+        String filePath = lblFotoPath.getText();
+
+// Mengonversi pilihan jenis kelamin ke kode (L/P)
+        switch (jenisKelamin) {
+            case "Laki-laki":
+                jK = "L";
+                break;
+            case "Perempuan":
+                jK = "P";
+                break;
+            default:
+                jK = null;
+                break;
+        }
+
+// Variabel untuk menyimpan path foto asli yang tersimpan di database
+        String fotoAsli = null;
+
+        try {
+            // Query untuk mengambil path foto berdasarkan NIS
+            String sql = "SELECT foto FROM siswa WHERE nis = ?";
+            Connection conn = koneksi.getKoneksi();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, nis);
+            ResultSet rs = ps.executeQuery();
+
+            // Jika data ditemukan, simpan path foto ke variabel fotoAsli
+            if (rs.next()) {
+                fotoAsli = rs.getString("foto");
+            }
+        } catch (SQLException e) {
+            // Tampilkan pesan jika gagal mengambil foto dari database
+            JOptionPane.showMessageDialog(null, "Gagal mengambil foto asli: " + e.getMessage());
+        }
+
+// Menentukan apakah foto diubah oleh pengguna
+        boolean fotoDiubah = (fotoAsli == null && !filePath.isEmpty())
+                || (fotoAsli != null && !fotoAsli.equals(filePath));
+
+// Jika foto diubah, variabel 'foto' akan diisi dengan path baru
+        String foto = fotoAsli;
+
+        if (fotoDiubah) {
+            try {
+                // Ambil file dari path baru
+                File sourceFile = new File(filePath);
+
+                // Dapatkan ekstensi file
+                String extension = filePath.substring(filePath.lastIndexOf('.') + 1);
+
+                // Buat nama file baru berdasarkan waktu agar unik
+                String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                String destinationPath = "src/foto/foto-" + timestamp + "." + extension;
+
+                // Salin file ke folder tujuan
+                File destFile = new File(destinationPath);
+                Files.copy(sourceFile.toPath(), destFile.toPath());
+
+                // Simpan path tujuan ke variabel 'foto'
+                foto = destinationPath;
+
+            } catch (Exception e) {
+                // Tampilkan pesan jika gagal upload file
+                JOptionPane.showMessageDialog(null, "Gagal upload file: " + e.getMessage());
+            }
+        }
+
+        try {
+            // Query SQL berbeda tergantung apakah foto diubah atau tidak
+            String sql2;
+            if (fotoDiubah) {
+                sql2 = "UPDATE siswa SET nama_siswa=?, gender=?, tempat_lahir=?, "
+                        + "tgl_lahir=?, alamat=?, no_hp=?, id_kelas=?, foto=? WHERE nis=?";
+            } else {
+                sql2 = "UPDATE siswa SET nama_siswa=?, gender=?, tempat_lahir=?, "
+                        + "tgl_lahir=?, alamat=?, no_hp=?, id_kelas=? WHERE nis=?";
+            }
+
+            // Membuka koneksi ke database
+            Connection conn = koneksi.getKoneksi();
+
+            // Menyiapkan statement untuk eksekusi SQL
+            PreparedStatement statement = conn.prepareStatement(sql2);
+
+            // Menetapkan parameter umum
+            statement.setString(1, namaSiswa);
+            statement.setString(2, jK);
+            statement.setString(3, tempatLahir);
+            statement.setString(4, tglLahir);
+            statement.setString(5, alamat);
+            statement.setString(6, hp);
+            statement.setString(7, kelas);
+
+            // Jika foto diubah, tetapkan parameter tambahan
+            if (fotoDiubah) {
+                statement.setString(8, foto);
+                statement.setString(9, nis);
+            } else {
+                statement.setString(8, nis);
+            }
+
+            // Eksekusi perintah update
+            statement.execute();
+
+            // Tampilkan pesan sukses
+            JOptionPane.showMessageDialog(null, "Data berhasil diubah!");
+
+        } catch (SQLException e) {
+            // Tampilkan pesan jika update gagal
+            JOptionPane.showMessageDialog(null, "Gagal memperbarui data: " + e.getMessage());
+        }
+
+// Muat ulang tabel agar perubahan terlihat
+        load_tabel_siswa();
+
+// Kosongkan form setelah proses selesai
+        reset();
+
+    }//GEN-LAST:event_buttonUbahActionPerformed
+
+    private void buttonHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusActionPerformed
+        // TODO add your handling code here:
+        String nis = txtNIS.getText();
+        
+        String sql = "DELETE FROM siswa WHERE nis = ?";
+        
+        try {
+            Connection cnVar = koneksi.getKoneksi();
+            
+            PreparedStatement psVar = cnVar.prepareStatement(sql);
+            
+            psVar.setString(1, nis);
+            psVar.execute();
+            
+            JOptionPane.showMessageDialog(null, "Data berhasil dihapus");
+        } catch (SQLException sQLException) {
+            JOptionPane.showMessageDialog(null, "Gagal menghapus data " + sQLException.getMessage());
+        }
+        load_tabel_siswa();
+        reset();
+    }//GEN-LAST:event_buttonHapusActionPerformed
+
+    private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
+        // TODO add your handling code here:
+        reset();
+    }//GEN-LAST:event_buttonResetActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonHapus;
+    private javax.swing.JButton buttonReset;
+    private javax.swing.JButton buttonTambah;
+    private javax.swing.JButton buttonUbah;
+    private javax.swing.JComboBox<String> cbJenisKelamin;
+    private javax.swing.JComboBox<String> cbKelas;
     private javax.swing.JLabel closeLabel2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -356,12 +930,14 @@ public class siswaPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JLabel lblFoto;
+    private javax.swing.JLabel lblFotoPath;
+    private javax.swing.JTable tabelSiswa;
+    private javax.swing.JTextArea txaAlamat;
+    private javax.swing.JTextField txtHP;
+    private com.toedter.calendar.JDateChooser txtKalender;
+    private javax.swing.JTextField txtNIS;
+    private javax.swing.JTextField txtNama;
+    private javax.swing.JTextField txtTempatLahir;
     // End of variables declaration//GEN-END:variables
 }
