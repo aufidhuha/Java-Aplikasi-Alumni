@@ -46,7 +46,7 @@ public class siswaPanel extends javax.swing.JPanel {
     
     void comboKelas(){
         try {
-            String sql = "SELECT * FROM siswa";
+            String sql = "SELECT * FROM kelas";
             Connection cnVar = koneksi.getKoneksi();
             Statement stVar = cnVar.createStatement();
             ResultSet rsVar = stVar.executeQuery(sql);
@@ -59,7 +59,7 @@ public class siswaPanel extends javax.swing.JPanel {
         } catch (SQLException sQLException) {
             JOptionPane.showMessageDialog(null, "Error");
         }
-        cbJenisKelamin.setSelectedItem(null);
+        cbKelas.setSelectedItem(null);
     }
     
     void load_tabel_siswa(){
